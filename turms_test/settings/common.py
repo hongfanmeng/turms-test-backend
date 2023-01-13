@@ -30,15 +30,20 @@ class Common(Configuration):
     ]
 
     REST_FRAMEWORK = {
+        # convert request to camel case
         "DEFAULT_PARSER_CLASSES": [
             "djangorestframework_camel_case.parser.CamelCaseJSONParser",
             "djangorestframework_camel_case.parser.CamelCaseFormParser",
             "djangorestframework_camel_case.parser.CamelCaseMultiPartParser",
         ],
+        # convert response to camel case
         "DEFAULT_RENDERER_CLASSES": (
             "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
             "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
         ),
+        # api only allow query by admin user by default
+        "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAdminUser"],
+        # authentication using simple jwt
         "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
         "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     }
